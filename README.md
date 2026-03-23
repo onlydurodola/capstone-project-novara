@@ -11,7 +11,7 @@ You have successfully containerized TaskApp (React frontend, Flask backend, Post
 
 **Domain**: You must use your own registered domain (any registrar).
 
-**Duration**: 2 weeks | **Team Size**: 1-2 students
+**Duration**: 2 weeks | **Team Size**: 1 student
 
 ---
 
@@ -259,6 +259,7 @@ Before final submission, ensure:
 - [ ] Repository is well-organized and documented
 
 **Submission**: Git repository URL + Live domain URL + Demo video.
+
 **Submission link**: https://forms.gle/8WsQDXWqDhuYPFxk9
 
 ---
