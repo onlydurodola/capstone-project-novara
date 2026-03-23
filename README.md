@@ -11,7 +11,7 @@ You have successfully containerized TaskApp (React frontend, Flask backend, Post
 
 **Domain**: You must use your own registered domain (any registrar).
 
-**Duration**: 2 weeks | **Team Size**: 1 student
+**Duration**: 3 weeks | **Team Size**: 1 student
 
 ---
 
