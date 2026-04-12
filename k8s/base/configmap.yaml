@@ -4,7 +4,7 @@ metadata:
   name: taskapp-config
   namespace: taskapp
 data:
+  DATABASE_HOST: "postgres-service"
+  DATABASE_PORT: "5432"
+  DATABASE_NAME: "taskapp"
   FLASK_ENV: "production"
-  DB_HOST: "postgres-service"
-  DB_PORT: "5432"
-  DB_NAME: "taskapp"

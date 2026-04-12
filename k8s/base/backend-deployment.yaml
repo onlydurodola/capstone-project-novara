@@ -18,41 +18,38 @@ spec:
       labels:
         app: backend
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
       containers:
       - name: backend
-        image: ogbonnasf/taskapp-backend:1.0.0
+        image: xpressdev/taskapp-backend:1.0.0
         ports:
         - containerPort: 5000
         env:
-        - name: FLASK_ENV
+        - name: DATABASE_HOST
           valueFrom:
             configMapKeyRef:
               name: taskapp-config
-              key: FLASK_ENV
-        - name: DB_HOST
+              key: DATABASE_HOST
+        - name: DATABASE_PORT
           valueFrom:
             configMapKeyRef:
               name: taskapp-config
-              key: DB_HOST
-        - name: DB_PORT
+              key: DATABASE_PORT
+        - name: DATABASE_NAME
           valueFrom:
             configMapKeyRef:
               name: taskapp-config
-              key: DB_PORT
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: taskapp-config
-              key: DB_NAME
-        - name: DB_USER
+              key: DATABASE_NAME
+        - name: DATABASE_USER
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: POSTGRES_USER
-        - name: DB_PASSWORD
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               name: postgres-secret
@@ -66,13 +63,13 @@ spec:
             cpu: "500m"
         livenessProbe:
           httpGet:
-            path: /health
+            path: /api/health
             port: 5000
           initialDelaySeconds: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
-            path: /health
+            path: /api/health
             port: 5000
           initialDelaySeconds: 10
           periodSeconds: 5
