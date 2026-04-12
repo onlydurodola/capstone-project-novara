@@ -2,9 +2,11 @@
 import os
 import sys
 from logging.config import fileConfig
+from urllib.parse import quote_plus
 
 from sqlalchemy import engine_from_config, pool
 from alembic import context
+from dotenv import load_dotenv
 
 # Add the parent directory to path so we can import models
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
@@ -12,6 +14,8 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 # Import your models to ensure Alembic sees them
 from app.models import User, Task  # noqa: F401
 from app import db
+
+load_dotenv()
 
 # this is the Alembic Config object
 config = context.config
@@ -26,6 +30,10 @@ target_metadata = db.Model.metadata
 
 def get_database_url():
     """Build database URL from environment variables."""
+    database_url = os.getenv('DATABASE_URL')
+    if database_url:
+        return database_url
+
     db_host = os.getenv('DATABASE_HOST')
     db_port = os.getenv('DATABASE_PORT', '5432')
     db_name = os.getenv('DATABASE_NAME')
@@ -33,7 +41,8 @@ def get_database_url():
     db_password = os.getenv('DATABASE_PASSWORD')
     
     if all([db_host, db_name, db_user, db_password]):
-        return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        encoded_password = quote_plus(db_password)
+        return f"postgresql://{db_user}:{encoded_password}@{db_host}:{db_port}/{db_name}"
     
     # Fallback for local development
     return "postgresql://taskapp_user:taskapp_password@localhost:5432/taskapp"

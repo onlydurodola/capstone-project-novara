@@ -1,5 +1,4 @@
 # Dependencies (installed in container)
-node_modules
 npm-debug.log
 
 # Build output (generated in container)
@@ -16,7 +15,8 @@ dist
 # Environment files (security!)
 .env
 .env.local
-.env.production
+.env.example
+#.env.production
 
 # Testing
 coverage

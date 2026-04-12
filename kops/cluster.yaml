@@ -1,0 +1,92 @@
+apiVersion: kops.k8s.io/v1alpha2
+kind: Cluster
+metadata:
+  creationTimestamp: "2026-04-11T10:43:22Z"
+  name: taskapp.xpresskode.site
+spec:
+  api:
+    loadBalancer:
+      class: Network
+      type: Public
+  authorization:
+    rbac: {}
+  channel: stable
+  cloudProvider: aws
+  configBase: s3://taskapp-kops-state-448866496656/taskapp.xpresskode.site
+  dnsZone: xpresskode.site
+  etcdClusters:
+  - cpuRequest: 200m
+    etcdMembers:
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1a
+      name: a
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1b
+      name: b
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1c
+      name: c
+    manager:
+      backupRetentionDays: 90
+    memoryRequest: 100Mi
+    name: main
+  - cpuRequest: 100m
+    etcdMembers:
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1a
+      name: a
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1b
+      name: b
+    - encryptedVolume: true
+      instanceGroup: control-plane-us-east-1c
+      name: c
+    manager:
+      backupRetentionDays: 90
+    memoryRequest: 100Mi
+    name: events
+  iam:
+    allowContainerRegistry: true
+    legacy: false
+  kubelet:
+    anonymousAuth: false
+  kubernetesApiAccess:
+  - 0.0.0.0/0
+  - ::/0
+  kubernetesVersion: 1.28.6
+  masterPublicName: api.taskapp.xpresskode.site
+  networkCIDR: 172.20.0.0/16
+  networking:
+    calico: {}
+  nonMasqueradeCIDR: 100.64.0.0/10
+  sshAccess:
+  - 0.0.0.0/0
+  - ::/0
+  subnets:
+  - cidr: 172.20.64.0/18
+    name: us-east-1a
+    type: Private
+    zone: us-east-1a
+  - cidr: 172.20.128.0/18
+    name: us-east-1b
+    type: Private
+    zone: us-east-1b
+  - cidr: 172.20.192.0/18
+    name: us-east-1c
+    type: Private
+    zone: us-east-1c
+  - cidr: 172.20.0.0/21
+    name: utility-us-east-1a
+    type: Utility
+    zone: us-east-1a
+  - cidr: 172.20.8.0/21
+    name: utility-us-east-1b
+    type: Utility
+    zone: us-east-1b
+  - cidr: 172.20.16.0/21
+    name: utility-us-east-1c
+    type: Utility
+    zone: us-east-1c
+  topology:
+    dns:
+      type: Public
